@@ -92,8 +92,8 @@ app.use((err,req,res,next)=>{
 //   res.send(newUser);
 // })
 
-app.listen(3000,()=>{ 
-    console.log('App is Listening at PORT 3000');
+app.listen(3050,()=>{ 
+    console.log('App is Listening at PORT 3050');
 });   
 
 //9928972681
