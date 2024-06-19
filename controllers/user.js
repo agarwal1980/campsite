@@ -30,8 +30,8 @@ module.exports.renderLogin = (req,res)=>{
 
 module.exports.Login = async(req,res)=>{
     req.flash('success',`Welcome back ${req.body.username}!`); 
-    const redirectUrl = req.query.redirect || '/campground';
-    res.redirect(redirectUrl);
+    const Url = res.locals.redirectUrl || '/campground';
+    res.redirect(Url);
 }
 
 module.exports.logout = async(req,res,next)=>{

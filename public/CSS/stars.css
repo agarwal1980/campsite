@@ -188,3 +188,14 @@
       display: none;
     }
   }
+
+  /* Ensure the carousel images are responsive */
+  .carousel-inner img {
+    max-height: 400px;
+    object-fit: cover;
+}
+/* Ensure the map is responsive */
+#map {
+    height: 100%;
+    width: 100%;
+}  

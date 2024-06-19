@@ -6,7 +6,7 @@ const userSchema = new Schema({
     email:{
         type:String,
         required:[true,'Email Is Neccesary'],
-        unigue:true
+        unique:true
     }
 })
 userSchema.plugin(passportlocalmongoose);

@@ -13,11 +13,12 @@ const upload = multer({storage});
 const db = Campground
 router.use(express.urlencoded({extended:true}));
 
-router.get('/' , wrapAsync(campController.index)) 
+router
+ .route('/')
+ .get(wrapAsync(campController.index))
+ .post(isLoggedIn,upload.array('image'),ValidateSchema,wrapAsync(campController.createNew)) 
 
 router.get('/new' ,isLoggedIn , wrapAsync(campController.renderNewForm));
-  
-router.post('/' , isLoggedIn,upload.array('image'),ValidateSchema,wrapAsync(campController.createNew))
   
 router.get('/:id' , wrapAsync(campController.showCamp))
   

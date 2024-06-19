@@ -1,34 +1,32 @@
 <% layout('layouts/boilerplate')%>
+<link rel="stylesheet" href="/CSS/index.css">
 
-<div id="map" style="height: 400px;"></div>
+<div id="map" style="height: 400px;" class="mb-4"></div>
 <div class="container">
-<h1>All Campgrounds</h1>
-<div>
-    <a href="/campground/new">Add Campground</a>
-</div>
+    <h1>All Campgrounds</h1>
+    <div class="mb-4">
+        <a href="/campground/new" class="btn btn-success">Add Campground</a>
+    </div>
 
-<div class="mb-3">
-    <% for (let campground of campgrounds){%>
-<div class="card" mb-3>
-    <div class="row">
-        <div class="col-md-4">
-             <img class="img-fluid" alt="" src="<%=campground.images[0].url%>">
-        </div>
-        <div class="col-md-8">
-            <div class="card-body">
-                <h5 class="card-title"><%= campground.title %> </h5>
-                <p class="card-text"><%= campground.description %></p>
-                <p class="card-text">
-                    <small class="text-muted"><%= campground.location%></small>
-                </p>
-                <a class="btn btn-primary" href="/campground/<%=campground._id%>">View <%=campground.title%></a>
+    <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 g-4">
+        <% for (let campground of campgrounds) { %>
+            <div class="col">
+                <div class="card h-100">
+                    <img class="img-fluid card-img-top" src="<%= campground.images[0].url %>" alt="<%= campground.title %>">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= campground.title %></h5>
+                        <p class="card-text"><%= campground.description %></p>
+                        <p class="card-text">
+                            <small class="text-muted"><%= campground.location %></small>
+                        </p>
+                        <a class="btn btn-primary" href="/campground/<%= campground._id %>">View <%= campground.title %></a>
+                    </div>
+                </div>
             </div>
-        </div>
+        <% } %>
     </div>
 </div>
-<% }%>
-</div>
-</div><script>
+<script>
 
     var geojsonData = {features: <%- JSON.stringify(campgrounds) %>}
     var campgrounds = <%- JSON.stringify(campgrounds) %>

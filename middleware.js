@@ -5,9 +5,10 @@ const express = require('express');
 
 module.exports.isLoggedIn= async (req,res,next)=>{
     if(!req.isAuthenticated()) {
+        req.session.redirectUrl = req.originalUrl;
+        console.log('isLoggedIn trigerred ', req.session.redirectUrl);
         req.flash('error','login required');
-        
-        return res.redirect('/login?redirect=' + encodeURIComponent(req.originalUrl));
+        return res.redirect('/login');
       }
   next();
 }
@@ -36,8 +37,16 @@ module.exports.ValidateReview = (req,res,next) =>{
   const {error} = reviewSchema.validate(req.body);
   if(error){
     const msg = error.details.map(e => e.message).join(',');
-    throw new AppError(msg,400)
+    throw new routerError(msg,400)
   }else{
     next();
   }
 }
+
+module.exports.saveRedirect = (req,res,next) =>{
+  if(req.session.redirectUrl){
+   console.log('saveRedirect call') 
+  res.locals.redirectUrl = req.session.redirectUrl;
+  }
+  next();
+};
