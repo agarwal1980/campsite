@@ -19,6 +19,8 @@ const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const UserRouter = require('./routers/user');
 const MongoDBStore = require('connect-mongo');
+const mongoSanitize = require('express-mongo-sanitize')
+const helmet = require('helmet');
 
 const db = Campground;
 const dbUrl = process.env.DB_URL || '127.0.0.1:27017/yelp-camp';  
@@ -38,7 +40,9 @@ app.set('views',path.join(__dirname,'views'));
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname,'public')))
-
+app.use(helmet({
+  contentSecurityPolicy :false
+}));
 
 
 const sessionConfig = {
@@ -58,7 +62,7 @@ const sessionConfig = {
   
 app.use(session(sessionConfig));
 app.use(flash());
- 
+app.use(mongoSanitize()); 
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
